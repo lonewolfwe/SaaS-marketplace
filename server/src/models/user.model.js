@@ -53,7 +53,6 @@ const UserSchema = new mongoose.Schema({
     }]
 }, { timestamps: true });
 
-UserSchema.index({ roles: 1 }); // Keeping this as it's multikey, though index: true might handle it, explicit is fine.
-// Removed redundant single field indexes that already have index: true in schema definition
+// Removed redundant index definitions as they are handled by schema options
 
 module.exports = mongoose.model('User', UserSchema);
