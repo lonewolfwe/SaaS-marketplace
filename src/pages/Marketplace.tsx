@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Filter, SlidersHorizontal, ArrowDownUp } from 'lucide-react';
+import { Search, SlidersHorizontal } from 'lucide-react';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { useAuth } from '@/context/AuthContext';
@@ -66,10 +66,7 @@ export default function Marketplace() {
 
                 // Sort listings: Newest first by default for now
                 // In a real app we might have a sort dropdown
-                const sortedListings = data.data.listings.sort((a: Listing, b: Listing) => {
-                    // Mock sort for "Hot" or "New" could go here
-                    return 0;
-                });
+                // Mock sort for "Hot" or "New" could go here if needed
 
                 setListings(data.data.listings);
             } catch (err: any) {
@@ -125,8 +122,8 @@ export default function Marketplace() {
                                     key={category}
                                     onClick={() => setSelectedCategory(category)}
                                     className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300 border ${selectedCategory === category
-                                            ? "bg-foreground text-background border-foreground"
-                                            : "bg-background text-muted-foreground border-border/60 hover:border-foreground/20 hover:text-foreground"
+                                        ? "bg-foreground text-background border-foreground"
+                                        : "bg-background text-muted-foreground border-border/60 hover:border-foreground/20 hover:text-foreground"
                                         }`}
                                 >
                                     {category}

@@ -1,4 +1,4 @@
-import { Github, Linkedin, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import DhanajayImg from '@/assets/images/team/dhanajay-birari.jpeg';
 import KaustubhImg from '@/assets/images/team/kaustubh-deshmukh.jpg';
