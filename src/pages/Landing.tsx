@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Check, TrendingUp, ShieldCheck, PieChart, Users, Globe, Lock, Cpu, BarChart3, ArrowUpRight } from 'lucide-react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { ArrowRight, Check, ShieldCheck, Globe, Lock, Cpu, BarChart3 } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
-import { useRef } from 'react';
 
 const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => (
     <motion.div
@@ -17,15 +16,6 @@ const FadeIn = ({ children, delay = 0, className = "" }: { children: React.React
 );
 
 export default function Landing() {
-    const targetRef = useRef<HTMLDivElement>(null);
-    const { scrollYProgress } = useScroll({
-        target: targetRef,
-        offset: ["start end", "end start"]
-    });
-
-    const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
-    const y = useTransform(scrollYProgress, [0, 0.5], [100, 0]);
-
     return (
         <div className="flex flex-col min-h-screen bg-background text-foreground overflow-x-hidden font-sans selection:bg-foreground/10 selection:text-foreground">
 
