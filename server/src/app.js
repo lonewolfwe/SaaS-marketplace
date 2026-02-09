@@ -12,7 +12,18 @@ const app = express();
 
 // Security Middleware
 app.use(helmet());
-app.use(cors({ origin: env.FRONTEND_URL, credentials: true }));
+const allowedOrigins = [env.FRONTEND_URL, 'http://localhost:5173', 'https://saas-marketplace-xq1j.onrender.com'];
+app.use(cors({
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            console.log('Blocked CORS origin:', origin);
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true
+}));
 
 // Rate Limiting
 const limiter = rateLimit({
