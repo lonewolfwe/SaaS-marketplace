@@ -10,7 +10,16 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  build: {                                        
-    sourcemap: false
+  build: {
+    sourcemap: false,
+    chunkSizeWarningLimit: 1000, // Increase limits to suppress large chunk warnings
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'framer-motion', 'react-router-dom'],
+          ui: ['lucide-react', 'clsx', 'tailwind-merge']
+        }
+      }
+    }
   }
 })
