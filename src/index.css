@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 220 20% 10%;
+    /* Dark Charcoal */
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 10%;
+
+    --primary: 245 70% 60%;
+    /* Vibrant Violet/Blue */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 20% 98%;
+    /* Very light grey */
+    --secondary-foreground: 220 20% 10%;
+
+    --muted: 210 20% 96%;
+    --muted-foreground: 220 10% 45%;
+
+    --accent: 210 20% 98%;
+    --accent-foreground: 220 20% 10%;
+
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 15% 90%;
+    --input: 220 15% 90%;
+    --ring: 245 70% 60%;
+
+    --radius: 0.3rem;
+    /* Tighter radius for a cleaner look */
+  }
+
+  .dark {
+    --background: 220 20% 6%;
+    /* Deep Charcoal, almost black */
+    --foreground: 210 20% 98%;
+
+    --card: 220 20% 8%;
+    --card-foreground: 210 20% 98%;
+
+    --popover: 220 20% 8%;
+    --popover-foreground: 210 20% 98%;
+
+    --primary: 245 80% 65%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 217 20% 12%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 20% 12%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 217 20% 12%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 20% 15%;
+    --input: 217 20% 15%;
+    --ring: 245 80% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased font-sans selection:bg-primary/10 selection:text-primary;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-medium tracking-tight text-foreground;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-background/80 backdrop-blur-md border border-white/20 shadow-sm;
+  }
+
+  .glass-dark {
+    @apply bg-black/40 backdrop-blur-md border border-white/10 shadow-sm;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  /* Premium Typography Utils */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-br from-foreground to-muted-foreground;
+  }
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}

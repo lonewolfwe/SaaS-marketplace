@@ -1,0 +1,70 @@
+const express = require('express');
+const helmet = require('helmet');
+const cors = require('cors');
+const morgan = require('morgan');
+const hpp = require('hpp');
+const mongoSanitize = require('express-mongo-sanitize');
+const rateLimit = require('express-rate-limit');
+const env = require('./config/env');
+
+const app = express();
+
+// Security Middleware
+app.use(helmet());
+app.use(cors({ origin: env.FRONTEND_URL, credentials: true }));
+
+// Rate Limiting
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per windowMs
+    message: {
+        status: 'fail',
+        message: 'Too many requests from this IP, please try again later'
+    }
+});
+app.use('/api', limiter);
+
+// Structured Logging
+if (env.NODE_ENV === 'development') {
+    app.use(morgan('dev'));
+}
+
+// Body Parsing
+app.use(express.json({ limit: '10kb' })); // Body limit
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+
+// Data Sanitization
+// app.use(mongoSanitize()); // Prevent NoSQL injection (Disabled due to error)
+app.use(hpp()); // Prevent HTTP Parameter Pollution
+
+// Routes
+const authRouter = require('./routes/auth.routes');
+const userRouter = require('./routes/user.routes');
+const listingRouter = require('./routes/listing.routes');
+const orderRouter = require('./routes/order.routes');
+const globalErrorHandler = require('./middlewares/errorMiddleware');
+
+app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/users', userRouter);
+app.use('/api/v1/listings', listingRouter);
+app.use('/api/v1/orders', orderRouter);
+app.use('/api/v1/subscriptions', require('./routes/subscription.routes'));
+app.use('/api/v1/admin', require('./routes/admin.routes'));
+
+app.get('/', (req, res) => {
+    res.status(200).json({ status: 'success', message: 'SaaS Marketplace API Running' });
+});
+
+// Handle undefined routes
+// Handle undefined routes
+app.use((req, res, next) => {
+    res.status(404).json({
+        status: 'fail',
+        message: `Can't find ${req.originalUrl} on this server!`
+    });
+});
+
+// Error Handling Middleware
+app.use(globalErrorHandler);
+
+module.exports = app;
