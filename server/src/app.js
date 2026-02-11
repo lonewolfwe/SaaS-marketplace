@@ -3,7 +3,6 @@ const helmet = require('helmet');
 const cors = require('cors');
 const morgan = require('morgan');
 const hpp = require('hpp');
-const compression = require('compression');
 const mongoSanitize = require('express-mongo-sanitize');
 const rateLimit = require('express-rate-limit');
 const env = require('./config/env');
@@ -12,18 +11,7 @@ const app = express();
 
 // Security Middleware
 app.use(helmet());
-const allowedOrigins = [env.FRONTEND_URL, 'http://localhost:5173', 'https://saas-marketplace-xq1j.onrender.com'];
-app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-            callback(null, true);
-        } else {
-            console.log('Blocked CORS origin:', origin);
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    credentials: true
-}));
+app.use(cors({ origin: env.FRONTEND_URL, credentials: true }));
 
 // Rate Limiting
 const limiter = rateLimit({
@@ -39,8 +27,6 @@ app.use('/api', limiter);
 // Structured Logging
 if (env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
-} else {
-    app.use(morgan('combined'));
 }
 
 // Body Parsing
@@ -48,11 +34,8 @@ app.use(express.json({ limit: '10kb' })); // Body limit
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
 // Data Sanitization
-app.use(mongoSanitize()); // Prevent NoSQL injection
+// app.use(mongoSanitize()); // Prevent NoSQL injection (Disabled due to error)
 app.use(hpp()); // Prevent HTTP Parameter Pollution
-
-// Compression
-app.use(compression());
 
 // Routes
 const authRouter = require('./routes/auth.routes');

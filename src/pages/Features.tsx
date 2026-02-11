@@ -1,4 +1,4 @@
-import { Zap, Shield, Globe, ArrowRight } from 'lucide-react';
+import { Globe, Zap, Shield, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';

@@ -84,10 +84,11 @@ export default function CreateListing() {
 
             // Success
             navigate('/dashboard/seller/listings');
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err: unknown) {
+            const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred';
+            setError(errorMessage);
             // Show error (maybe scroll to top or show toast? For now, simple alert or inline error if we add it)
-            alert(`Error: ${err.message}`);
+            alert(`Error: ${errorMessage}`);
         } finally {
             setIsLoading(false);
         }

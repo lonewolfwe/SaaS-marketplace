@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { MoreHorizontal, Search, RefreshCw } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { Button } from '@/components/ui/Button';
@@ -24,7 +24,7 @@ export default function UserManagement() {
     const [search, setSearch] = useState('');
     const [roleFilter, setRoleFilter] = useState('all');
 
-    const fetchUsers = async () => {
+    const fetchUsers = useCallback(async () => {
         setIsLoading(true);
         try {
             const res = await fetch(`${API_URL}/users`, {
@@ -39,11 +39,11 @@ export default function UserManagement() {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [token]);
 
     useEffect(() => {
         if (token) fetchUsers();
-    }, [token]);
+    }, [token, fetchUsers]);
 
     const filteredUsers = users.filter(user => {
         const matchesSearch =

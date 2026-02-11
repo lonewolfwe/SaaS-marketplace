@@ -36,8 +36,6 @@ module.exports = (err, req, res, next) => {
         // Cloning error object to copy properties
         let error = { ...err };
         error.message = err.message;
-        error.name = err.name; // IDK why MDN says name is not enumerable, but sometimes it is needed
-
 
         // Mongoose bad ObjectId
         if (err.name === 'CastError') {

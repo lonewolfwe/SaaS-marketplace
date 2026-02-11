@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Search, Download, ArrowUpRight, DollarSign, Calendar, CreditCard, RefreshCw } from 'lucide-react';
 import { cn } from '../../../lib/utils';
 import { Button } from '@/components/ui/Button';
@@ -28,7 +28,7 @@ export default function AdminOrders() {
     const [isLoading, setIsLoading] = useState(true);
     const [search, setSearch] = useState('');
 
-    const fetchOrders = async () => {
+    const fetchOrders = useCallback(async () => {
         setIsLoading(true);
         try {
             const res = await fetch(`${API_URL}/orders`, {
@@ -43,11 +43,11 @@ export default function AdminOrders() {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [token]);
 
     useEffect(() => {
         if (token) fetchOrders();
-    }, [token]);
+    }, [token, fetchOrders]);
 
     const filteredOrders = orders.filter(order => {
         const name = order.buyerId?.profile?.firstName + ' ' + order.buyerId?.profile?.lastName;

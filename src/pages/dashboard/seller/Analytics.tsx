@@ -25,9 +25,19 @@ const SimpleBarChart = ({ data, color = "bg-primary" }: { data: number[], color?
     );
 };
 
+interface Stats {
+    revenue: number;
+    orders: number;
+    avgOrderValue: number;
+    mrr: number;
+    activeSubscribers: number;
+    monthlyRevenue: number[];
+    dailyOrders: number[];
+}
+
 export default function SellerAnalytics() {
     const { token } = useAuth();
-    const [stats, setStats] = useState<any>(null);
+    const [stats, setStats] = useState<Stats | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -65,6 +75,8 @@ export default function SellerAnalytics() {
     if (isLoading) {
         return <div className="space-y-6"><Skeleton className="h-64 w-full" /><div className="grid grid-cols-2 gap-6"><Skeleton className="h-32" /><Skeleton className="h-32" /></div></div>;
     }
+
+    if (!stats) return <div className="text-center py-12">Failed to load analytics.</div>;
 
     return (
         <div className="space-y-8 animate-fade-in pb-20">

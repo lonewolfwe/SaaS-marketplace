@@ -22,8 +22,8 @@ export default function BuyerProfile() {
                 firstName: user.profile?.firstName || '',
                 lastName: user.profile?.lastName || '',
                 email: user.email || '',
-                bio: (user.profile as any)?.bio || '',
-                companyName: (user.profile as any)?.companyName || ''
+                bio: user.profile?.bio || '',
+                companyName: user.profile?.companyName || ''
             });
         }
     }, [user]);

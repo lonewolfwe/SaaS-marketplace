@@ -59,7 +59,7 @@ export default function SellerSettings() {
             } else {
                 setMessage({ type: 'error', text: data.message || 'Failed to update profile' });
             }
-        } catch (err) {
+        } catch {
             setMessage({ type: 'error', text: 'Network error occurred' });
         } finally {
             setIsLoading(false);

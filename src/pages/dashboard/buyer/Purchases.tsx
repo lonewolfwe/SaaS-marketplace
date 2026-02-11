@@ -4,10 +4,27 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { API_URL } from '@/config';
 
+interface Purchase {
+    _id: string;
+    listingId: {
+        title: string;
+    };
+    sellerId: {
+        profile: {
+            firstName: string;
+            companyName: string;
+        };
+    };
+    createdAt: string;
+    amount: number;
+    status: string;
+    type?: string;
+}
+
 export default function BuyerPurchases() {
     const { token } = useAuth();
     const [searchTerm, setSearchTerm] = useState('');
-    const [purchases, setPurchases] = useState<any[]>([]);
+    const [purchases, setPurchases] = useState<Purchase[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {

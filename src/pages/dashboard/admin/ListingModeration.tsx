@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Check, X, AlertOctagon, ExternalLink, Eye, RefreshCw } from 'lucide-react';
 
 import { Button } from '@/components/ui/Button';
@@ -16,7 +16,7 @@ export default function ListingModeration() {
     const [isLoading, setIsLoading] = useState(true);
     const [confirmingId, setConfirmingId] = useState<string | null>(null);
 
-    const fetchPendingListings = async () => {
+    const fetchPendingListings = useCallback(async () => {
         setIsLoading(true);
         try {
             // Admin route to get all pending listings. 
@@ -36,11 +36,11 @@ export default function ListingModeration() {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [token]);
 
     useEffect(() => {
         fetchPendingListings();
-    }, [token]);
+    }, [token, fetchPendingListings]);
 
     const handleModeration = async (id: string, action: 'approve' | 'reject') => {
         try {

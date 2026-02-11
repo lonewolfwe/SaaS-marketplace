@@ -5,9 +5,29 @@ import { cn } from '../../../lib/utils';
 import { useAuth } from '@/context/AuthContext';
 import { API_URL } from '@/config';
 
+interface Subscriber {
+    _id: string;
+    amount: number;
+    buyerId: {
+        email: string;
+        profile: {
+            firstName: string;
+            lastName: string;
+        };
+    };
+    listingId: {
+        title: string;
+    };
+    subscription: {
+        status: string;
+        interval: string;
+        nextBillingDate: string;
+    };
+}
+
 export default function SellerCustomers() {
     const { token } = useAuth();
-    const [customers, setCustomers] = useState<any[]>([]);
+    const [customers, setCustomers] = useState<Subscriber[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
 

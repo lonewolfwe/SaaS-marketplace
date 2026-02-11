@@ -5,9 +5,24 @@ import { useAuth } from '@/context/AuthContext';
 import { API_URL } from '@/config';
 import { Button } from '@/components/ui/Button';
 
+interface Subscription {
+    _id: string;
+    listingId: {
+        title: string;
+        images: string[];
+    };
+    subscription: {
+        status: string;
+        interval: string;
+        nextBillingDate: string;
+        endDate?: string;
+    };
+    amount: number;
+}
+
 export default function BuyerSubscriptions() {
     const { token } = useAuth();
-    const [subscriptions, setSubscriptions] = useState<any[]>([]);
+    const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [processingId, setProcessingId] = useState<string | null>(null);
 

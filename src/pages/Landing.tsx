@@ -3,6 +3,7 @@ import { ArrowRight, Check, ShieldCheck, Globe, Lock, Cpu, BarChart3 } from 'luc
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 
+
 const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode, delay?: number, className?: string }) => (
     <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -16,6 +17,10 @@ const FadeIn = ({ children, delay = 0, className = "" }: { children: React.React
 );
 
 export default function Landing() {
+
+
+
+
     return (
         <div className="flex flex-col min-h-screen bg-background text-foreground overflow-x-hidden font-sans selection:bg-foreground/10 selection:text-foreground">
 

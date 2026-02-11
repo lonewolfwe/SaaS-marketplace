@@ -66,7 +66,7 @@ export default function Marketplace() {
 
                 // Sort listings: Newest first by default for now
                 // In a real app we might have a sort dropdown
-                // Mock sort for "Hot" or "New" could go here if needed
+
 
                 setListings(data.data.listings);
             } catch (err: any) {

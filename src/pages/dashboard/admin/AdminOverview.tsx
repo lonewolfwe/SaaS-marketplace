@@ -2,7 +2,7 @@ import { DollarSign, Users, Package, Activity, TrendingUp, Server, CreditCard, R
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { API_URL } from '@/config';
 import { Link } from 'react-router-dom';
@@ -39,6 +39,11 @@ interface ChartData {
     value: number;
 }
 
+interface ApiResponse<T> {
+    status: string;
+    data: T;
+}
+
 export default function AdminOverview() {
     const { token } = useAuth();
     const [stats, setStats] = useState<DashboardStats | null>(null);
@@ -46,7 +51,7 @@ export default function AdminOverview() {
     const [chartData, setChartData] = useState<ChartData[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         if (!token) return;
         setIsLoading(true);
         try {
@@ -54,7 +59,7 @@ export default function AdminOverview() {
             const statsRes = await fetch(`${API_URL}/admin/stats/overview`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
-            const statsData = await statsRes.json();
+            const statsData = await statsRes.json() as ApiResponse<DashboardStats>;
             if (statsData.status === 'success') {
                 setStats(statsData.data);
             }
@@ -63,10 +68,10 @@ export default function AdminOverview() {
             const activityRes = await fetch(`${API_URL}/admin/activity`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
-            const activityData = await activityRes.json();
+            const activityData = await activityRes.json() as ApiResponse<{ activity: ActivityItem[] }>;
             if (activityData.status === 'success') {
                 // Transform date to time string
-                const formattedActivity = activityData.data.activity.map((item: any) => ({
+                const formattedActivity = activityData.data.activity.map((item: ActivityItem) => ({
                     ...item,
                     time: new Date(item.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
                 }));
@@ -77,7 +82,7 @@ export default function AdminOverview() {
             const chartRes = await fetch(`${API_URL}/admin/analytics/charts`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
-            const chartDataRes = await chartRes.json();
+            const chartDataRes = await chartRes.json() as ApiResponse<{ revenueOverTime: ChartData[] }>;
             if (chartDataRes.status === 'success') {
                 setChartData(chartDataRes.data.revenueOverTime);
             }
@@ -87,11 +92,11 @@ export default function AdminOverview() {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [token]);
 
     useEffect(() => {
         fetchData();
-    }, [token]);
+    }, [token, fetchData]);
 
     return (
         <div className="space-y-6 font-sans text-sm animate-fade-in">

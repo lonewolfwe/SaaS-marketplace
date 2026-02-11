@@ -53,6 +53,7 @@ const UserSchema = new mongoose.Schema({
     }]
 }, { timestamps: true });
 
-// Removed redundant index definitions as they are handled by schema options
+
+// Removed redundant single field indexes that already have index: true in schema definition
 
 module.exports = mongoose.model('User', UserSchema);

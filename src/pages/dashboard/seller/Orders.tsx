@@ -5,9 +5,26 @@ import { Package, Search, Filter, ArrowRight } from 'lucide-react';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 
+interface Order {
+    _id: string;
+    amount: number;
+    status: string;
+    createdAt: string;
+    listingId: {
+        title: string;
+    };
+    buyerId: {
+        email: string;
+        profile: {
+            firstName: string;
+            lastName: string;
+        };
+    };
+}
+
 export default function SellerOrders() {
     const { token } = useAuth();
-    const [orders, setOrders] = useState<any[]>([]);
+    const [orders, setOrders] = useState<Order[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -100,7 +117,7 @@ export default function SellerOrders() {
                                         <td className="px-6 py-4 font-medium">${order.amount.toFixed(2)}</td>
                                         <td className="px-6 py-4">
                                             <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${order.status === 'completed' ? 'bg-green-50 text-green-700 border-green-200' :
-                                                    order.status === 'refunded' ? 'bg-red-50 text-red-700 border-red-200' : 'bg-gray-50 text-gray-700 border-gray-200'
+                                                order.status === 'refunded' ? 'bg-red-50 text-red-700 border-red-200' : 'bg-gray-50 text-gray-700 border-gray-200'
                                                 }`}>
                                                 {order.status}
                                             </span>
