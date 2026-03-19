@@ -12,4 +12,9 @@ router.get('/stats/overview', adminController.getDashboardStats);
 router.get('/activity', adminController.getActivityFeed);
 router.get('/analytics/charts', adminController.getChartData);
 
+router.get('/settings', adminController.getSettings);
+router.patch('/settings', adminController.updateSettings);
+
+router.get('/reports', adminController.getReports);
+
 module.exports = router;

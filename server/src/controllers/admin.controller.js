@@ -159,3 +159,50 @@ exports.getChartData = catchAsync(async (req, res, next) => {
         }
     });
 });
+
+// 🔵 PART 7 — Platform Settings
+const PlatformSettings = require('../models/platformSettings.model');
+
+exports.getSettings = catchAsync(async (req, res, next) => {
+    const settings = await PlatformSettings.getSettings();
+    res.status(200).json({
+        status: 'success',
+        data: { settings }
+    });
+});
+
+exports.updateSettings = catchAsync(async (req, res, next) => {
+    const settings = await PlatformSettings.getSettings();
+
+    if (req.body.maintenanceMode !== undefined) settings.maintenanceMode = req.body.maintenanceMode;
+    if (req.body.registrationsOpen !== undefined) settings.registrationsOpen = req.body.registrationsOpen;
+    if (req.body.fees) {
+        if (req.body.fees.standard !== undefined) settings.fees.standard = req.body.fees.standard;
+        if (req.body.fees.enterprise !== undefined) settings.fees.enterprise = req.body.fees.enterprise;
+    }
+
+    settings.updatedAt = Date.now();
+    settings.updatedBy = req.user._id;
+    await settings.save();
+
+    res.status(200).json({
+        status: 'success',
+        data: { settings }
+    });
+});
+
+// 🟣 PART 8 — Reports (Mock for now, but served from backend)
+exports.getReports = catchAsync(async (req, res, next) => {
+    // In a real app, this would query DB for specific time ranges and generate CSV/PDFs
+    const reports = [
+        { id: 1, title: "Financial Summary (Monthly)", description: "Revenue, payouts, and taxes for the selected month.", date: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) },
+        { id: 2, title: "User Growth Report", description: "New signups, churn rate, and LTV analysis.", date: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) },
+        { id: 3, title: "Content Moderation Log", description: "History of all flagged and removed listings.", date: "Last 30 Days" },
+        { id: 4, title: "Platform Health Check", description: "System uptime, errors, and performance metrics.", date: "Real-time" },
+    ];
+
+    res.status(200).json({
+        status: 'success',
+        data: { reports }
+    });
+});

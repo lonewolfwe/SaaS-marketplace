@@ -4,11 +4,11 @@ const isDevelopment = import.meta.env.MODE === 'development';
 
 export const API_URL = import.meta.env.VITE_API_URL || (isDevelopment
     ? 'http://localhost:5000/api/v1'
-    : 'https://saas-marketplace-1-6qqt.onrender.com/api/v1');
+    : 'https://api.yourdomain.com/api/v1'); // Update with real prod URL when deploying
 
 export const BASE_URL = isDevelopment
     ? 'http://localhost:5000'
-    : 'https://saas-marketplace-1-6qqt.onrender.com';
+    : 'https://api.yourdomain.com';
 
 export default {
     API_URL,
