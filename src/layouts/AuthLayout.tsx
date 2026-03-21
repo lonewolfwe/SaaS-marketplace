@@ -20,7 +20,7 @@ export default function AuthLayout() {
             </div>
 
             <div className="absolute bottom-6 text-center text-[10px] text-muted-foreground">
-                © 2026 SaaS Marketplace. Inc.
+                All rights reserved.
             </div>
         </div>
     );

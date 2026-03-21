@@ -3,7 +3,7 @@ import MainLayout from './layouts/MainLayout';
 import AuthLayout from './layouts/AuthLayout';
 import DashboardLayout from './layouts/DashboardLayout';
 import RequireAuth from './components/auth/RequireAuth';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 
 // Pages
 import Landing from './pages/Landing';
@@ -39,6 +39,12 @@ import AdminSettings from './pages/dashboard/admin/Settings';
 
 const NotFound = () => <div className="p-8 text-center text-2xl font-bold flex flex-col items-center justify-center h-[50vh]">404 - Page Not Found</div>;
 
+const DashboardRedirect = () => {
+  const { user } = useAuth();
+  const role = user?.roles?.[0] || 'buyer';
+  return <Navigate to={`/dashboard/${role}`} replace />;
+};
+
 function App() {
   return (
     <AuthProvider>
@@ -61,8 +67,9 @@ function App() {
 
         {/* Dashboard Routes */}
         <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route index element={<Navigate to="/dashboard/overview" replace />} />
+          <Route index element={<DashboardRedirect />} />
           <Route path="overview" element={<DashboardOverview />} />
+
           <Route path="marketplace" element={<Marketplace />} />
           <Route path="listing/:id" element={<ListingDetail />} />
 

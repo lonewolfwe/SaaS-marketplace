@@ -27,9 +27,6 @@ export default function DashboardOverview() {
     const [recentOrders, setRecentOrders] = useState<any[]>([]);
     const [topListings, setTopListings] = useState<Listing[]>([]);
 
-    // Admin State (Placeholder)
-
-
     // Modal State
     const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false);
     const [selectedListing, setSelectedListing] = useState<Listing | null>(null);
@@ -102,9 +99,7 @@ export default function DashboardOverview() {
                     console.error("Partial fetch error in seller dashboard", innerErr);
                 }
             }
-            else if (role === 'admin') {
-                // Placeholder admin stats
-            }
+
 
         } catch (err) {
             console.error("Failed to fetch dashboard data", err);
@@ -112,6 +107,12 @@ export default function DashboardOverview() {
             setIsLoading(false);
         }
     };
+
+    useEffect(() => {
+        if (role === 'admin') {
+            navigate('/dashboard/admin/overview', { replace: true });
+        }
+    }, [role, navigate]);
 
     useEffect(() => {
         fetchData();

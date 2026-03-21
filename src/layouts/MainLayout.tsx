@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Outlet, Link } from 'react-router-dom';
-import { Menu, X, Github, Twitter } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 
 export default function MainLayout() {
@@ -75,10 +75,6 @@ export default function MainLayout() {
                             <Link to="/" className="font-display font-bold text-xl tracking-tighter mb-4 block">
                                 Marketplace<span className="text-primary">.</span>
                             </Link>
-                            <div className="flex gap-4 mt-6">
-                                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors"><Twitter className="h-5 w-5" /></a>
-                                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors"><Github className="h-5 w-5" /></a>
-                            </div>
                         </div>
                         <div>
                             <h3 className="font-medium text-foreground mb-4">Platform</h3>
@@ -106,7 +102,7 @@ export default function MainLayout() {
                         </div>
                     </div>
                     <div className="border-t border-border pt-8 text-center md:text-left text-sm text-muted-foreground">
-                        © 2026 SaaS Marketplace. All rights reserved.
+                        All rights reserved.
                     </div>
                 </div>
             </footer>

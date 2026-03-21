@@ -302,20 +302,9 @@ export default function Landing() {
 
             {/* --- FOOTER --- */}
             <footer className="py-12 border-t border-border bg-secondary/5">
-                <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-                    <div className="flex items-center gap-2">
-                        <div className="h-6 w-6 bg-foreground rounded text-background flex items-center justify-center font-bold text-xs">
-                            S
-                        </div>
-                        <span className="font-bold text-sm tracking-tight">SaaS Marketplace</span>
-                    </div>
+                <div className="container mx-auto px-6 flex flex-col md:flex-row justify-center items-center gap-6">
                     <div className="text-sm text-muted-foreground">
-                        © 2026 Kaustubh Deshmukh. All rights reserved.
-                    </div>
-                    <div className="flex gap-6 text-xs font-mono uppercase tracking-widest text-muted-foreground">
-                        <Link to="#" className="hover:text-foreground transition-colors">Twitter</Link>
-                        <Link to="#" className="hover:text-foreground transition-colors">LinkedIn</Link>
-                        <Link to="#" className="hover:text-foreground transition-colors">Github</Link>
+                        All rights reserved.
                     </div>
                 </div>
             </footer>
